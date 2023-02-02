@@ -2,7 +2,7 @@ import { React, Component } from 'react';
 import SearchBar from './SearchBar/SearchBar';
 import Button from './Button/Button';
 import ImageGallery from './ImageGallery/ImageGallery';
-import Modal from './Modal/Modal';
+
 import { fetchImages } from '..//service/fetchImages';
 export class App extends Component {
   state = {
@@ -12,7 +12,7 @@ export class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { query, images, page } = this.state;
+    const { query, page } = this.state;
     if (prevState.query !== query || prevState.page !== page) {
       fetchImages(query, page).then(resp => {
         this.setState(({ images }) => ({
@@ -26,13 +26,18 @@ export class App extends Component {
     this.setState({ query });
   };
 
+  handleLoadMore = () => {
+    this.setState(({ page }) => ({ page: page + 1 }));
+  };
+
   render() {
     return (
       <div>
         <SearchBar onSubmit={this.handleSubmit} />
-        <Button />
         <ImageGallery images={this.state.images} />
-        <Modal />
+        {this.state.images.length !== 0 && (
+          <Button onClick={this.handleLoadMore} />
+        )}
       </div>
     );
   }
