@@ -18,7 +18,6 @@ class Modal extends Component {
 
   onCloseBackdropClick = e => {
     if (e.currentTarget === e.target) {
-      // console.log('clicked to backdrop');
       this.props.onClose();
     }
   };
