@@ -3,6 +3,7 @@ import SearchBar from './SearchBar/SearchBar';
 import Button from './Button/Button';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
+import Notiflix from 'notiflix';
 import { fetchImages } from '..//service/fetchImages';
 
 export class App extends Component {
@@ -24,6 +25,12 @@ export class App extends Component {
             totalImages: resp.totalHits,
           }));
         })
+        .catch(error => {
+          console.log(error);
+          return Notiflix.Notify.failure(
+            'Sorry, there are no images matching your search query. Please try again.'
+          );
+        })
         .finally(() => {
           this.setState({ isLoading: false });
         });
@@ -31,7 +38,10 @@ export class App extends Component {
   }
 
   handleSubmit = query => {
-    this.setState({ query, isLoading: true });
+    this.setState({ query, page: 1 });
+    if (this.state.query !== '') {
+      this.setState({ isLoading: true });
+    }
   };
 
   handleLoadMore = () => {

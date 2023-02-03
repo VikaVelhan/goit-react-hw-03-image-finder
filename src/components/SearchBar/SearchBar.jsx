@@ -1,9 +1,17 @@
+import Notiflix from 'notiflix';
+
 import css from './SearchBar.module.css';
 
 const SearchBar = ({ onSubmit }) => {
   const handleSubmit = e => {
     e.preventDefault();
     onSubmit(e.currentTarget.query.value);
+    if (e.currentTarget.elements.query.value === '') {
+      Notiflix.Notify.failure('Please, enter your query.');
+
+      return;
+    }
+    e.target.reset();
   };
 
   return (
