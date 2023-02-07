@@ -38,7 +38,7 @@ export class App extends Component {
   }
 
   handleSubmit = query => {
-    this.setState({ query, page: 1 });
+    this.setState({ query, page: 1, images: [] });
     if (this.state.query !== '') {
       this.setState({ isLoading: true });
     }

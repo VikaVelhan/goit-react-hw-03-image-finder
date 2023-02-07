@@ -5,8 +5,8 @@ import css from './SearchBar.module.css';
 const SearchBar = ({ onSubmit }) => {
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmit(e.currentTarget.query.value);
-    if (e.currentTarget.elements.query.value === '') {
+    onSubmit(e.currentTarget.query.value.trim());
+    if (e.currentTarget.elements.query.value.trim() === '') {
       Notiflix.Notify.failure('Please, enter your query.');
 
       return;
